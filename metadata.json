@@ -1,0 +1,8 @@
+{
+  "name": "Royal Cricket Ground",
+  "description": "Premium cricket turf booking website for Royal Cricket Ground in Moinabad, Telangana.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
