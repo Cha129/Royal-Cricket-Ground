@@ -13,6 +13,7 @@ import {
   GalleryPage,
   TournamentsPage,
   ContactPage,
+  WebsiteCraftedPage,
 } from "@/royal-site";
 
 const queryClient = new QueryClient();
@@ -29,6 +30,7 @@ function Router() {
         <Route path="/gallery" component={GalleryPage} />
         <Route path="/tournaments" component={TournamentsPage} />
         <Route path="/contact" component={ContactPage} />
+        <Route path="/website-crafted" component={WebsiteCraftedPage} />
         <Route component={NotFound} />
       </Switch>
     </SiteShell>

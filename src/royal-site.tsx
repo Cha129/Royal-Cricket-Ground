@@ -18,6 +18,16 @@ import {
   Star,
   X,
   Youtube,
+  Globe,
+  Palette,
+  Code2,
+  ShieldCheck,
+  Briefcase,
+  Laptop,
+  Sparkles,
+  Cpu,
+  Layers,
+  Award,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -615,9 +625,27 @@ export function BookSlotPage() {
   });
   const [selectedSlot, setSelectedSlot] = useState("6:45 AM – 10:15 AM");
 
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [teamName, setTeamName] = useState("");
+  const [players, setPlayers] = useState("");
+  const [notes, setNotes] = useState("");
+
   const formattedDate = date
     ? date.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })
     : "your preferred date";
+
+  const bookingMessage = useMemo(() => {
+    let msg = `Hi Royal Cricket Ground, I would like to book a cricket slot.\n\n`;
+    if (name) msg += `👤 *Name:* ${name}\n`;
+    if (phone) msg += `📞 *Phone:* ${phone}\n`;
+    if (teamName) msg += `🏏 *Team:* ${teamName}\n`;
+    msg += `📅 *Date:* ${formattedDate}\n`;
+    msg += `⏰ *Slot:* ${selectedSlot}\n`;
+    if (players) msg += `👥 *Players:* ${players}\n`;
+    if (notes) msg += `📝 *Notes:* ${notes}\n`;
+    return msg;
+  }, [name, phone, teamName, formattedDate, selectedSlot, players, notes]);
 
   useEffect(() => {
     if (date) {
@@ -655,10 +683,28 @@ export function BookSlotPage() {
             </CardHeader>
             <CardContent className="grid gap-4">
               <div className="grid gap-4 sm:grid-cols-2">
-                <Input placeholder="Name" aria-label="Name" className="h-12 rounded-md border-border/60 bg-background/25" />
-                <Input placeholder="Phone number" aria-label="Phone number" className="h-12 rounded-md border-border/60 bg-background/25" />
+                <Input 
+                  placeholder="Name" 
+                  aria-label="Name" 
+                  className="h-12 rounded-md border-border/60 bg-background/25" 
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+                <Input 
+                  placeholder="Phone number" 
+                  aria-label="Phone number" 
+                  className="h-12 rounded-md border-border/60 bg-background/25" 
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
               </div>
-              <Input placeholder="Team name" aria-label="Team name" className="h-12 rounded-md border-border/60 bg-background/25" />
+              <Input 
+                placeholder="Team name" 
+                aria-label="Team name" 
+                className="h-12 rounded-md border-border/60 bg-background/25" 
+                value={teamName}
+                onChange={(e) => setTeamName(e.target.value)}
+              />
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <Popover>
@@ -703,25 +749,34 @@ export function BookSlotPage() {
               </div>
 
               <div className="grid gap-4 sm:grid-cols-2">
-                <Input placeholder="Number of players" aria-label="Number of players" className="h-12 rounded-md border-border/60 bg-background/25" />
+                <Input 
+                  placeholder="Number of players" 
+                  aria-label="Number of players" 
+                  className="h-12 rounded-md border-border/60 bg-background/25" 
+                  value={players}
+                  onChange={(e) => setPlayers(e.target.value)}
+                />
                 <Input value={selectedSlot} readOnly aria-label="Selected slot timing" className="h-12 rounded-md border-border/60 bg-background/25" />
               </div>
 
-              <Textarea placeholder="Notes" aria-label="Notes" className="min-h-28 rounded-md border-border/60 bg-background/25" />
+              <Textarea 
+                placeholder="Notes" 
+                aria-label="Notes" 
+                className="min-h-28 rounded-md border-border/60 bg-background/25" 
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+              />
 
               <div className="grid gap-3 sm:grid-cols-2">
-                <Button asChild variant="hero" size="hero">
-                  <a
-                    href={buildWhatsAppMessage(
-                      `Hi Royal Cricket Ground, I want to book a cricket slot for ${formattedDate} during ${selectedSlot}.`,
-                    )}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <MessageCircle className="h-4 w-4" />
-                    Send booking request
-                  </a>
-                </Button>
+                <BookingContactDialog
+                  bookingMessage={bookingMessage}
+                  trigger={
+                    <Button type="button" variant="hero" size="hero">
+                      <MessageCircle className="h-4 w-4" />
+                      Book The Slot
+                    </Button>
+                  }
+                />
                 <Button asChild variant="glass" size="hero">
                   <a href={`tel:${site.phone.replace(/\s+/g, "")}`}>
                     <Phone className="h-4 w-4" />
@@ -1285,6 +1340,220 @@ export function ContactPage() {
   );
 }
 
+export function WebsiteCraftedPage() {
+  const pillars = [
+    {
+      icon: Palette,
+      title: "UI/UX Artistry",
+      description: "Crafting beautiful interfaces with tailored layouts, premium typography, and pixel-perfect responsiveness that engage users from the very first interaction.",
+    },
+    {
+      icon: Code2,
+      title: "Full-Stack Mastery",
+      description: "Building production-ready, highly secure web applications using modern React, TypeScript, and Node.js environments with stable architectures.",
+    },
+    {
+      icon: Cpu,
+      title: "Interactive Innovation",
+      description: "Integrating powerful client-side features, intelligent state mechanics, dynamic schedulers, and rich visual interactive layouts.",
+    },
+  ];
+
+  const techArsenal = [
+    { category: "Frontend", items: ["React 18+", "TypeScript", "Vite", "Tailwind CSS", "Framer Motion", "Radix UI"] },
+    { category: "Backend & Databases", items: ["Node.js", "Express", "Firebase Firestore", "PostgreSQL", "REST APIs"] },
+    { category: "Workflows & Tools", items: ["Git & GitHub", "Docker", "Vercel / Cloud Run", "ESLint / Prettier"] },
+  ];
+
+  return (
+    <PageIntro
+      eyebrow="Website Crafted By"
+      title="WishCraft Studios & Vadlamudi Sai Chanakya"
+      description="The creative force, UI/UX craftsmanship, and software engineering behind the digital presence of Royal Cricket Ground."
+      image={wishcraftLogoUrl}
+      imageAlt="WishCraft Studios Logo"
+    >
+      {/* WishCraft Studios Section */}
+      <SectionShell className="pt-12">
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <Badge className="bg-primary/10 text-primary border-primary/20 uppercase tracking-wider text-xs mb-3 px-3 py-1">
+            ✨ Creative Tech Studio
+          </Badge>
+          <h2 className="font-display text-4xl sm:text-5xl text-foreground">
+            WishCraft Studios
+          </h2>
+          <p className="mt-4 text-sm sm:text-base text-primary font-medium italic">
+            "Turning Your Moments into Magic"
+          </p>
+          <p className="mt-4 text-sm sm:text-base leading-relaxed text-muted-foreground">
+            WishCraft Studios is an elite digital craftsmanship studio. We build modern, high-performance websites, creative branding assets, and immersive full-stack user experiences that help local businesses and sports facilities represent their true value online.
+          </p>
+        </div>
+
+        {/* Studio Pillars Grid */}
+        <div className="grid gap-6 md:grid-cols-3">
+          {pillars.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Card key={item.title} className="glass-panel border-border/50 rounded-lg p-6 flex flex-col gap-4">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-primary/35 bg-primary/10 text-primary">
+                  <Icon className="h-6 w-6" />
+                </div>
+                <div>
+                  <h3 className="font-display text-xl text-foreground mb-2">{item.title}</h3>
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              </Card>
+            );
+          })}
+        </div>
+      </SectionShell>
+
+      {/* Meet Vadlamudi Sai Chanakya Section */}
+      <SectionShell>
+        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] items-start">
+          {/* Left Column: Photo & Contact card */}
+          <Card className="glass-panel border-border/50 rounded-lg overflow-hidden relative p-6 sm:p-8">
+            <div className="absolute -right-8 -bottom-8 opacity-[0.03] pointer-events-none w-48 h-48">
+              <CricketBallSVG className="w-full h-full text-primary" />
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-start text-center sm:text-left mb-6">
+              <img
+                src={devPhotoUrl}
+                alt="Vadlamudi Sai Chanakya"
+                className="h-24 w-24 sm:h-28 sm:w-28 rounded-full border-2 border-primary/45 object-cover shadow-2xl"
+              />
+              <div>
+                <Badge className="bg-primary/25 text-primary border-none text-[10px] uppercase font-bold tracking-wider px-2 py-0.5">
+                  Founder &amp; Developer
+                </Badge>
+                <h3 className="font-display text-2xl text-foreground mt-2 leading-tight">
+                  Vadlamudi Sai Chanakya
+                </h3>
+                <p className="text-sm text-primary font-medium mt-1">
+                  Lead Software Architect
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  📞 +91 74164 13238
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-4 text-xs sm:text-sm text-muted-foreground leading-relaxed border-t border-border/40 pt-5">
+              <div className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-primary shrink-0" />
+                <span>Specialist in React & modern web ecosystems</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-primary shrink-0" />
+                <span>Responsive, mobile-first design thinking</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-primary shrink-0" />
+                <span>Delivering optimized, super-fast load times</span>
+              </div>
+            </div>
+
+            <div className="mt-8 flex flex-col sm:flex-row gap-3">
+              <Button asChild variant="hero" className="w-full h-10 text-xs">
+                <a href="https://wa.me/917416413238" target="_blank" rel="noreferrer" className="flex items-center justify-center gap-1.5">
+                  <MessageCircle className="h-4 w-4" />
+                  Chat on WhatsApp
+                </a>
+              </Button>
+              <Button asChild variant="glass" className="w-full h-10 text-xs border-border/50">
+                <a href="https://www.linkedin.com/in/sai-chanakya-vadlamudi-94ab04363" target="_blank" rel="noreferrer" className="flex items-center justify-center gap-1.5">
+                  <Globe className="h-4 w-4" />
+                  LinkedIn Portfolio
+                </a>
+              </Button>
+            </div>
+          </Card>
+
+          {/* Right Column: Narrative, Quote, Tech Arsenal */}
+          <div className="space-y-8">
+            <div className="space-y-4">
+              <Badge className="bg-primary/10 text-primary border-primary/20 uppercase tracking-widest text-[10px] px-2.5 py-0.5">
+                The Architect
+              </Badge>
+              <h3 className="font-display text-3xl text-foreground">
+                Crafting With Care &amp; Precision
+              </h3>
+              <p className="text-sm sm:text-base leading-relaxed text-muted-foreground">
+                Vadlamudi Sai Chanakya is a passionate software engineer and digital craftsman with a deep obsession for pixel perfection and smooth client experiences. His goal is to bring modern enterprise-level web architectures down to intuitive, lightning-fast web applications for clubs, sports, and local ventures.
+              </p>
+              <div className="border-l-2 border-primary pl-4 py-1 italic text-muted-foreground text-sm sm:text-base bg-primary/5 rounded-r">
+                "We don't just build grids and buttons. We build interactive stages that celebrate the effort and grit of real-world operators — whether they're bowling wickets on turf or serving customers."
+              </div>
+            </div>
+
+            {/* Tech Arsenal Grid */}
+            <div className="space-y-4 border-t border-border/40 pt-6">
+              <h4 className="font-display text-xl text-foreground flex items-center gap-2">
+                <Cpu className="h-5 w-5 text-primary" />
+                Technical Arsenal
+              </h4>
+              <div className="grid gap-4 sm:grid-cols-3">
+                {techArsenal.map((group) => (
+                  <div key={group.category} className="rounded-lg border border-border/45 bg-background/25 p-4 text-xs">
+                    <h5 className="font-bold text-foreground mb-2.5 uppercase tracking-wider text-[10px] text-primary">
+                      {group.category}
+                    </h5>
+                    <ul className="space-y-1.5 text-muted-foreground font-mono text-[11px]">
+                      {group.items.map((item) => (
+                        <li key={item} className="flex items-center gap-1">
+                          <span className="text-primary">•</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </SectionShell>
+
+      {/* RCG Collaboration Section */}
+      <SectionShell className="pb-16">
+        <Card className="glass-panel border-border/50 rounded-lg p-6 sm:p-10 relative overflow-hidden">
+          <div className="absolute right-0 top-0 bg-primary/15 text-primary text-[10px] font-bold uppercase tracking-widest px-4 py-1.5 rounded-bl">
+            RCG Project Focus
+          </div>
+          <div className="max-w-3xl">
+            <h3 className="font-display text-2xl sm:text-3xl text-foreground mb-4">
+              Building Royal Cricket Ground
+            </h3>
+            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-6">
+              The digital experience for Royal Cricket Ground (RCG) was meticulously designed to be mobile-first, load in under 1.5 seconds, and eliminate any friction between a player wanting to book and sending a WhatsApp confirmation. Every piece of code is tailor-made:
+            </p>
+            <div className="grid gap-4 sm:grid-cols-2 text-xs sm:text-sm text-muted-foreground">
+              <div className="flex items-start gap-2">
+                <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                <div>
+                  <p className="font-bold text-foreground">Athletic Visual Vibe</p>
+                  <p className="mt-0.5 text-xs text-muted-foreground">Deep greens, gold text accents, and clean border lights mimicking evening matches under stadium floodlights.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-2">
+                <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                <div>
+                  <p className="font-bold text-foreground">Double-Number Dispatcher</p>
+                  <p className="mt-0.5 text-xs text-muted-foreground">Custom-designed multi-number booking dialog that ensures booking requests reach both organizers simultaneously.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Card>
+      </SectionShell>
+    </PageIntro>
+  );
+}
+
 function FacilitiesGrid({ title, description }: { title: string; description: string }) {
   return (
     <SectionShell>
@@ -1560,5 +1829,107 @@ export function HomeTabsPreview() {
       <TabsContent value="timings" className="mt-4" />
       <TabsContent value="reviews" className="mt-4" />
     </Tabs>
+  );
+}
+
+interface BookingContactDialogProps {
+  trigger: ReactNode;
+  bookingMessage: string;
+}
+
+export function BookingContactDialog({ trigger, bookingMessage }: BookingContactDialogProps) {
+  const [open, setOpen] = useState(false);
+
+  const handleSendToBoth = () => {
+    // Open founder
+    window.open(`https://wa.me/919000400411?text=${encodeURIComponent(bookingMessage)}`, '_blank');
+    // Open co-founder
+    setTimeout(() => {
+      window.open(`https://wa.me/919550810878?text=${encodeURIComponent(bookingMessage)}`, '_blank');
+    }, 800);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        {trigger}
+      </DialogTrigger>
+      <DialogContent className="max-w-md glass-panel border-border/60 bg-background/95 p-6 rounded-lg shadow-2xl">
+        <DialogHeader>
+          <DialogTitle className="font-display text-2xl text-foreground text-center">Send Booking Request</DialogTitle>
+          <DialogDescription className="text-center text-sm text-muted-foreground mt-2">
+            To guarantee your booking, please send this pre-filled message to both of our coordinators on WhatsApp:
+          </DialogDescription>
+        </DialogHeader>
+
+        {/* Message Preview */}
+        <div className="mt-4 rounded-md border border-border/50 bg-background/40 p-3.5 text-xs text-muted-foreground font-mono whitespace-pre-line leading-relaxed max-h-40 overflow-y-auto">
+          {bookingMessage}
+        </div>
+
+        <div className="mt-6 grid gap-4">
+          {/* Main action: Send to Both */}
+          <Button 
+            onClick={handleSendToBoth}
+            className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold flex items-center justify-center gap-2 h-11"
+          >
+            <MessageCircle className="h-5 w-5" />
+            Send to Both Numbers (Recommended)
+          </Button>
+
+          <div className="relative flex py-2 items-center">
+            <div className="flex-grow border-t border-border/45"></div>
+            <span className="flex-shrink mx-4 text-xs text-muted-foreground uppercase tracking-wider">Or Message Individually</span>
+            <div className="flex-grow border-t border-border/45"></div>
+          </div>
+
+          {/* Coordinator 1: Shaik Lal Ahmad */}
+          <div className="flex flex-col gap-2 rounded-lg border border-primary/20 bg-primary/5 p-4">
+            <div className="flex justify-between items-start">
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-primary">Founder & Owner</span>
+                <h4 className="font-semibold text-foreground text-sm mt-0.5">Shaik Lal Ahmad</h4>
+                <p className="text-xs text-muted-foreground">+91 90004 00411</p>
+              </div>
+              <Badge className="bg-primary/20 text-primary border-none text-[9px] uppercase px-1.5 py-0.5">Primary Contact</Badge>
+            </div>
+            <Button asChild variant="hero" size="default" className="w-full mt-2 h-9 text-xs">
+              <a
+                href={`https://wa.me/919000400411?text=${encodeURIComponent(bookingMessage)}`}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center justify-center gap-2"
+              >
+                <MessageCircle className="h-3.5 w-3.5" />
+                Message Founder
+              </a>
+            </Button>
+          </div>
+
+          {/* Coordinator 2: Mohammad Nazeer */}
+          <div className="flex flex-col gap-2 rounded-lg border border-border/50 bg-background/25 p-4">
+            <div className="flex justify-between items-start">
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Co-Founder</span>
+                <h4 className="font-semibold text-foreground text-sm mt-0.5">Mohammad Nazeer</h4>
+                <p className="text-xs text-muted-foreground">+91 95508 10878</p>
+              </div>
+              <Badge className="bg-secondary text-foreground text-[9px] uppercase px-1.5 py-0.5">Co-Founder</Badge>
+            </div>
+            <Button asChild variant="glass" size="default" className="w-full mt-2 h-9 text-xs border-border/50">
+              <a
+                href={`https://wa.me/919550810878?text=${encodeURIComponent(bookingMessage)}`}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center justify-center gap-2"
+              >
+                <MessageCircle className="h-3.5 w-3.5" />
+                Message Co-Founder
+              </a>
+            </Button>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }

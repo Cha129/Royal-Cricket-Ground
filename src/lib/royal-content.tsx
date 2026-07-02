@@ -70,9 +70,9 @@ export const site = {
   mapLink:
     "https://www.google.com/maps/place/Royal+Cricket+Ground+(RCG)/@17.342818,78.2379955,17z/data=!3m1!4b1!4m6!3m5!1s0x3bcbebc37e7790bd:0x2819a8e8f496e339!8m2!3d17.342818!4d78.2379955!16s%2Fg%2F11wy0fppw2?entry=ttu",
   openingHours: [
-    "Morning slots · 6:00 AM – 10:00 AM",
-    "Afternoon slots · 12:00 PM – 5:00 PM",
-    "Evening & night slots · 6:00 PM – 12:00 AM",
+    "Morning Slot · 6:45 AM – 10:15 AM",
+    "Afternoon Slot · 10:45 AM – 2:15 PM",
+    "Evening Slot · 2:30 PM – 6:00 PM",
   ],
 };
 
@@ -176,20 +176,20 @@ export const facilitiesOverview: Array<{ title: string; description: string; ico
 
 export const slotBands = [
   {
-    label: "Morning",
-    time: "6:00 AM – 10:00 AM",
+    label: "Morning Slot",
+    time: "6:45 AM – 10:15 AM",
     status: "Available",
     note: "Best for early practice and fresh turf sessions.",
   },
   {
-    label: "Afternoon",
-    time: "12:00 PM – 5:00 PM",
+    label: "Afternoon Slot",
+    time: "10:45 AM – 2:15 PM",
     status: "Limited slots",
     note: "Great for team nets, coaching, and shorter fixtures.",
   },
   {
-    label: "Evening / Night",
-    time: "6:00 PM – 12:00 AM",
+    label: "Evening Slot",
+    time: "2:30 PM – 6:00 PM",
     status: "Booked fast",
     note: "Prime-time cricket under lights with peak energy.",
   },
@@ -333,6 +333,7 @@ export const quickLinks = [
   { label: "See gallery", to: "/gallery" as const },
   { label: "Upcoming tournaments", to: "/tournaments" as const },
   { label: "Contact us", to: "/contact" as const },
+  { label: "Website Crafted", to: "/website-crafted" as const },
 ];
 
 export const socialLinks = [
